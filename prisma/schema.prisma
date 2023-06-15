@@ -1,0 +1,47 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["clientExtensions"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Supervisor {
+  id      String             @id @default(cuid())
+  name    String
+  email   String             @unique
+  drivers DriverSupervisor[]
+}
+
+model DriverSupervisor {
+  id           String     @id @default(cuid())
+  driver       Driver     @relation(fields: [driverId], references: [id])
+  driverId     String
+  supervisor   Supervisor @relation(fields: [supervisorId], references: [id])
+  supervisorId String
+}
+
+model Driver {
+  id          String             @id @default(cuid())
+  name        String
+  email       String             @unique
+  day_hours   Int                @default(0)
+  night_hours Int                @default(0)
+  drives      Drive[]
+  supervisors DriverSupervisor[]
+}
+
+model Drive {
+  id              String    @id @default(cuid())
+  date            DateTime  @db.Date
+  start_timestamp DateTime? @default(now()) @db.Timestamptz(3)
+  end_timestamp   DateTime? @db.Timestamptz(3)
+  isNight         Boolean
+  driver          Driver    @relation(fields: [driverId], references: [id])
+  driverId        String
+}
