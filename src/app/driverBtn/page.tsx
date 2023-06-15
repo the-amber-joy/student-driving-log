@@ -1,26 +1,26 @@
 "use client";
-import { computeTotalHours } from "@/types";
+import { computeTotalHours } from "@/util";
 import { Driver } from "@prisma/client";
 import Image from "next/image";
 
-const DriverBtn = ({ d, idx }: { d: Driver; idx: number }) => {
-  const driver = computeTotalHours(d);
+const DriverBtn = ({ driver, idx }: { driver: Driver; idx: number }) => {
+  const driverDetail = computeTotalHours(driver);
   return (
     <button
-      key={driver?.id}
+      key={driverDetail?.id}
       className="border border-white text-center mx-auto px-8 pb-4"
-      onClick={() => console.log(driver)}
+      onClick={() => console.log(driverDetail)}
     >
       <Image
-        src={`https://robohash.org/${driver?.id}?set=set4&size=180x180`}
+        src={`https://robohash.org/${driverDetail.id}?set=set4&size=180x180`}
         width={180}
         height={180}
-        alt={driver?.name ?? `Student Driver #${idx}`}
+        alt={driverDetail.name ?? `Student Driver #${idx}`}
       />
       <p>{driver.name ?? `Student Driver #${idx}`}</p>
-      <p>Day Hours Driven: {driver?.day_hours}</p>
-      <p>Night Hours Driven: {driver?.night_hours}</p>
-      <p>Total Hours Driven: {driver?.total_hours}</p>
+      <p>Day Hours Driven: {driverDetail.day_hours}</p>
+      <p>Night Hours Driven: {driverDetail.night_hours}</p>
+      <p>Total Hours Driven: {driverDetail.total_hours}</p>
     </button>
   );
 };

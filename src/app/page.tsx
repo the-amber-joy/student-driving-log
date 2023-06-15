@@ -20,7 +20,7 @@ export default async function Home() {
       >
         {map(drivers, (driver: Driver, i: number) => (
           <DriverBtn
-            d={JSON.parse(JSON.stringify(driver))}
+            driver={JSON.parse(JSON.stringify(driver))}
             key={driver.id}
             idx={i}
           />
