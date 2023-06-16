@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { computeTotalHours } from "@/util";
+import { computeTotalHours } from "@/lib/helpers";
 import { Driver } from "@prisma/client";
 import { Box, Button, Modal, Typography } from "@mui/material";
 import { useState } from "react";
@@ -41,6 +41,7 @@ const DriverBtn = ({ driver, idx }: { driver: Driver; idx: number }) => {
           width={180}
           height={180}
           alt={name ?? `Student Driver #${idx}`}
+          priority
         />
         <p>{driver.name ?? `Student Driver #${idx}`}</p>
         <p>Day Hours Driven: {day_hours}</p>
