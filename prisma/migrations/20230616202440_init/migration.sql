@@ -1,8 +1,8 @@
 -- CreateTable
 CREATE TABLE "Supervisor" (
     "id" TEXT NOT NULL,
-    "name" TEXT,
-    "email" TEXT,
+    "name" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
 
     CONSTRAINT "Supervisor_pkey" PRIMARY KEY ("id")
 );
@@ -19,10 +19,11 @@ CREATE TABLE "DriverSupervisor" (
 -- CreateTable
 CREATE TABLE "Driver" (
     "id" TEXT NOT NULL,
-    "name" TEXT,
-    "email" TEXT,
+    "name" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
     "day_hours" INTEGER NOT NULL DEFAULT 0,
     "night_hours" INTEGER NOT NULL DEFAULT 0,
+    "total_hours" INTEGER NOT NULL DEFAULT 0,
 
     CONSTRAINT "Driver_pkey" PRIMARY KEY ("id")
 );
@@ -30,10 +31,10 @@ CREATE TABLE "Driver" (
 -- CreateTable
 CREATE TABLE "Drive" (
     "id" TEXT NOT NULL,
-    "date" DATE NOT NULL,
+    "date" TIMESTAMPTZ(3) DEFAULT CURRENT_TIMESTAMP,
     "start_timestamp" TIMESTAMPTZ(3) DEFAULT CURRENT_TIMESTAMP,
     "end_timestamp" TIMESTAMPTZ(3),
-    "isNight" BOOLEAN NOT NULL,
+    "isNight" BOOLEAN DEFAULT false,
     "driverId" TEXT NOT NULL,
 
     CONSTRAINT "Drive_pkey" PRIMARY KEY ("id")

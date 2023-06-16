@@ -16,10 +16,10 @@ export const prisma =
           needs: { start_timestamp: true, end_timestamp: true },
           compute(drive) {
             const total = drive?.end_timestamp
-              ? dayjs(drive.start_timestamp).diff(
-                  dayjs(drive.end_timestamp),
-                  "hours"
-                )
+              ? `${dayjs(drive.end_timestamp).diff(
+                  dayjs(drive.start_timestamp),
+                  "minutes"
+                )} min`
               : 0;
             return total;
           },

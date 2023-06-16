@@ -32,13 +32,14 @@ model Driver {
   email       String             @unique
   day_hours   Int                @default(0)
   night_hours Int                @default(0)
+  total_hours Int                @default(0)
   drives      Drive[]
   supervisors DriverSupervisor[]
 }
 
 model Drive {
   id              String    @id @default(cuid())
-  date            DateTime? @default(now()) @db.Date
+  date            DateTime? @default(now()) @db.Timestamptz(3)
   start_timestamp DateTime? @default(now()) @db.Timestamptz(3)
   end_timestamp   DateTime? @db.Timestamptz(3)
   isNight         Boolean?  @default(false)
