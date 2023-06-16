@@ -5,11 +5,10 @@ export async function GET(
   request: Request,
   { params }: { params: { driverId: string } }
 ) {
-  const driverId = params.driverId;
+  const { searchParams } = new URL(request.url);
+  const driverId = searchParams.get("driverId") as string;
   const drives = await prisma.drive.findMany({
-    where: {
-      driverId,
-    },
+    where: { driverId },
   });
   return NextResponse.json(drives);
 }

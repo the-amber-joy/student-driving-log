@@ -5,8 +5,9 @@ import { Driver } from "@prisma/client";
 import { Box, Button, Modal, Typography } from "@mui/material";
 import { useState } from "react";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import ListDrives from "@/app/all-drives/allDrives";
-import DriveHistory from "../all-drives/page";
+import ListDrives from "@/components/allDrives.component";
+// import ListDrives from "@/app/all-drives/allDrives";
+// import DriveHistory from "../all-drives/page";
 
 const style = {
   position: "absolute" as "absolute",
@@ -93,7 +94,7 @@ const DriverBtn = ({ driver, idx }: { driver: Driver; idx: number }) => {
             Start Drive
           </Button>
 
-          <DriveHistory driverId={id} />
+          <ListDrives driverId={id} />
         </Box>
       </Modal>
     </>

@@ -1,14 +1,12 @@
 "use client";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
-
-import { Drive } from "@prisma/client";
 import React, { cache, use } from "react";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { Drive } from "@prisma/client";
 
 const getDrives = cache((driverId: string) =>
   fetch(`http://localhost:3000/api/drives?driverId=${driverId}`).then((res) =>
     res.json()
-  )
-);
+  ));
 
 export default function ListDrives({ driverId }: { driverId: string }) {
   const drives = use<Drive[]>(getDrives(driverId));
