@@ -1,9 +1,14 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
+/**
+ * Get all drives for a selected driver
+ * 
+ * @param request 
+ * @returns 
+ */
 export async function GET(
   request: Request,
-  { params }: { params: { driverId: string } }
 ) {
   const { searchParams } = new URL(request.url);
   const driverId = searchParams.get("driverId") as string;
@@ -13,6 +18,11 @@ export async function GET(
   return NextResponse.json(drives);
 }
 
+/**
+ * Start a new drive for this driver
+ * @param request - driverId and day/night boolean
+ * @returns 
+ */
 export async function POST(request: Request) {
   try {
     const json = await request.json();

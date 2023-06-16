@@ -31,8 +31,8 @@ model Driver {
   name        String
   email       String             @unique
   day_hours   Int                @default(0)
-  night_hours Int                @default(0)
-  total_hours Int                @default(0)
+  night_hours Int?                @default(0)
+  total_hours Int?                @default(0)
   drives      Drive[]
   supervisors DriverSupervisor[]
 }
