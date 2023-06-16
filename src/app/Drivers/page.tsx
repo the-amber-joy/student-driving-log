@@ -31,33 +31,36 @@ const Drivers = ({ drivers }: { drivers: Driver[] }) => {
         if (newDrive) setShowSuccess(true);
       },
       (err) => {
-        // TODO: Amber, 2023-06-16 - maybe add a success toast too
-        console.log("pop a toast or something here", err);
+        setShowError(true);
+        console.log(err);
       }
     );
   };
 
   const [showSuccess, setShowSuccess] = useState<boolean>(false);
+  const [showError, setShowError] = useState<boolean>(false);
   const handleClose = () => {
-    setShowSuccess(false)
-  }
+    setShowSuccess(false);
+  };
+  const severity = showSuccess ? "success" : "error"
+  const color = showSuccess ? "info" : "error"
   return (
     <>
       <Snackbar
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        open={showSuccess}
+        open={showSuccess || showError}
         onClose={handleClose}
         autoHideDuration={3000}
       >
-        <Alert severity="success" color="info">
-          Drive started!
+        <Alert severity={severity} color={color}>
+          {showSuccess && "Drive started!"}
+          {showError && "Something went wrong - please try again"}
         </Alert>
       </Snackbar>
       <div
         style={{
           display: "grid",
           gridTemplateColumns: "1fr 1fr 1fr",
-          gridTemplateRows: ". . 1fd",
           gap: 10,
         }}
       >
