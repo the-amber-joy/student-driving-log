@@ -3,6 +3,8 @@ import { prisma } from "@/lib/prisma";
 import DriverBtn from "./driverBtn/page";
 import { Driver } from "@prisma/client";
 import ListDrives from "@/components/allDrives.component";
+// import ListDrives from "@/app/all-drives/allDrives";
+import Link from "next/link";
 
 export default async function Home() {
   // const records = await prisma.driverSupervisor.findMany({
@@ -29,8 +31,17 @@ export default async function Home() {
             idx={i}
           />
         ))}
+        {/* TODO: Amber, 2023-06-15 - Maybe like, show this list when a driver is clicked */}
         {/* <ListDrives /> */}
       </div>
+      {/* <div>
+        <p>
+          <Link href="/initial-data">Prefetching Using initial data</Link>
+        </p>
+        <p>
+          <Link href="/hydration">Prefetching Using Hydration</Link>
+        </p>
+      </div> */}
     </main>
   );
 }

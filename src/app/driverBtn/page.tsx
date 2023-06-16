@@ -5,7 +5,8 @@ import { Driver } from "@prisma/client";
 import { Box, Button, Modal, Typography } from "@mui/material";
 import { useState } from "react";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import ListDrives from "@/components/allDrives.component";
+import ListDrives from "@/app/all-drives/allDrives";
+import DriveHistory from "../all-drives/page";
 
 const style = {
   position: "absolute" as "absolute",
@@ -19,15 +20,40 @@ const style = {
   p: 4,
 };
 
+const startDrive = (driverId: string) =>
+  fetch(`http://localhost:3000/api/drives`, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json; charset=utf8",
+    },
+    body: JSON.stringify({
+      driver: { connect: { id: driverId } },
+    }),
+  })
+    .then((response) => response.json())
+    .catch((error) => {
+      console.error(error);
+    });
+
 const DriverBtn = ({ driver, idx }: { driver: Driver; idx: number }) => {
+  const { id, name, day_hours, night_hours, total_hours } =
+    computeTotalHours(driver);
   const [open, setOpen] = useState(false);
   const handleOpen = (id: string) => {
     setOpen(true);
   };
   const handleClose = () => setOpen(false);
-  const startDrive = () => console.log("foo");
-  const { id, name, day_hours, night_hours, total_hours } =
-    computeTotalHours(driver);
+  const handleStart = () => {
+    startDrive(id).then(
+      (newDrive) => {
+        console.log(newDrive);
+        if (newDrive) handleClose();
+      },
+      (err) => {
+        console.log("pop a toast or something here", err);
+      }
+    );
+  };
 
   return (
     <>
@@ -62,12 +88,12 @@ const DriverBtn = ({ driver, idx }: { driver: Driver; idx: number }) => {
             variant="contained"
             size="large"
             endIcon={<ArrowForwardIcon />}
-            onClick={startDrive}
+            onClick={handleStart}
           >
             Start Drive
           </Button>
 
-          {/* <ListDrives driverId={id} /> */}
+          <DriveHistory driverId={id} />
         </Box>
       </Modal>
     </>

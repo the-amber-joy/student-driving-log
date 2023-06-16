@@ -3,10 +3,13 @@ import { NextResponse } from "next/server";
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { driverId: string } }
 ) {
+  const driverId = params.driverId;
   const drives = await prisma.drive.findMany({
-    where: { driverId: params.id },
+    where: {
+      driverId,
+    },
   });
   return NextResponse.json(drives);
 }
@@ -24,11 +27,6 @@ export async function POST(request: Request) {
       headers: { "Content-Type": "application/json" },
     });
   } catch (error: any) {
-    if (error.code === "P2002") {
-      return new NextResponse("Driver with email already exists", {
-        status: 409,
-      });
-    }
     return new NextResponse(error.message, { status: 500 });
   }
 }

@@ -38,10 +38,10 @@ model Driver {
 
 model Drive {
   id              String    @id @default(cuid())
-  date            DateTime  @db.Date
+  date            DateTime? @default(now()) @db.Date
   start_timestamp DateTime? @default(now()) @db.Timestamptz(3)
   end_timestamp   DateTime? @db.Timestamptz(3)
-  isNight         Boolean
+  isNight         Boolean?  @default(false)
   driver          Driver    @relation(fields: [driverId], references: [id])
   driverId        String
 }
