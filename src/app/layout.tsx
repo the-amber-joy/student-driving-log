@@ -2,6 +2,7 @@ import { clsx } from "clsx";
 import { Inter } from "next/font/google";
 
 import "./globals.css";
+import Providers from "@/utils/provider";
 
 const inter = Inter({
   weight: ["400", "700"],
@@ -21,7 +22,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={clsx(inter.className, "min-h-screen")}>{children}</body>
+      <body className={clsx(inter.className, "min-h-screen")}>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }
